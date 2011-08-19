@@ -20,15 +20,17 @@ suite("after").batch()
 		.vow("returns value for one argument", function(a) {
 			["string", null, undefined, /foo/, [], {}, 1].forEach(function(val) {
 				var f= a(1, function(value) {
-					assert.equal(val, value, "result is not equal as expected" + value + val);
+					assert.equal(val, value, 
+						"result is not equal as expected" + value + val);
 				})(val);	
 			});
 		})
 		.vow("returns an array for multiple arguments", function(a) {
 			var arr = ["lol", "foo", "baz"];
 			a(1, function(array) {
-				Object.keys(array).forEach(function (key) {
-					assert.equal(array[key], arr[key], "result is not equal as expected" + array[key] + arr[key]);
+				array.forEach(function (key) {
+					assert.equal(array[key], arr[key], 
+						"result is not equal as expected" + array[key] + arr[key]);
 				})
 			}).apply(null, arr); 
 		})
@@ -37,9 +39,11 @@ suite("after").batch()
 			for (var i = 1; i < 100; i++) {
 				(function(i) {
 					fs[i] = a(i, function() {
-						assert.equal(arguments.length, i, "arguments is not the right size" + arguments.length + i);
+						assert.equal(arguments.length, i, 
+							"arguments is not the right size" + arguments.length + i);
 						for (var j = 0; j < i; j++) {
-							assert.equal(j, arguments[j], "value is not as expected" + j + arguments[j]);
+							assert.equal(j, arguments[j], 
+								"value is not as expected" + j + arguments[j]);
 						}
 					});	
 				}).call(null, i);
@@ -97,7 +101,7 @@ suite("after").batch()
 				}).bind(this));
 				setTimeout(f, 100);
 			})
-			.vow("was called", function(f) {
+			.vow("it was called", function(f) {
 				assert.ok(f.fired, "it was not called");
 			})
 			.suite()
