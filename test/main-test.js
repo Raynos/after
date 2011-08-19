@@ -3,6 +3,7 @@ var suite = require('vows-fluent').suite,
 	after = require('../after.js');
 
 suite("after").batch()
+
 	.context("After")
 		.topic(function() {
 			return after;
@@ -10,43 +11,7 @@ suite("after").batch()
 		.vow("is a function", function(a) {
 			assert.ok(typeof a === "function", "After is not a function");
 			assert.ok(a.length === 2, "The length is not two");
-		})
-		.context("after(1, f)")
-			.topic(function (a) {
-				var f = a(1, function() {
-					f.fired = true;
-				});
-				return f;
-			})
-			.vow("fires after being called once", function(f) {
-				assert.ok(!f.fired, "It fired immediatly")
-				f();
-				assert.ok(f.fired, "It does not fire after once");
-			})
-			.parent()
-		.context("after(n, f)")
-			.topic(function(a) {
-				var arr = [];
-				for (var i = 0; i < 100; i++) {
-					arr[i] = a(i, function() {
-						arr[i].fired = true;
-					});
-				}
-				return arr;
-			})
-			.vow("fires after being called n times", function(arr) {
-				arr.forEach(function(k, v) {
-					for (var i = 0; i < k; i++) {
-						v();
-						if (i === k - 1) {
-							assert.ok(v.fired, "It did not fire when expected" + k + i);
-						} else {
-							assert.ok(!v.fired, "It fired when not expected" + k + i)
-						}
-					}
-				});
-			})
-			.parent()
+		})		
 		.vow("returns null for no arguments", function(a) {
 			a(1, function(val) {
 				assert.equal(null, val, "result is not null");
@@ -85,5 +50,56 @@ suite("after").batch()
 				}
 			});
 		})
-		.suite()
-.end().export(module);
+
+		.context("after(1, f)")
+			.topic(function (a) {
+				var f = a(1, function() {
+					f.fired = true;
+				});
+				return f;
+			})
+			.vow("fires after being called once", function(f) {
+				assert.ok(!f.fired, "It fired immediatly")
+				f();
+				assert.ok(f.fired, "It does not fire after once");
+			})
+			.parent()
+
+		.context("after(n, f)")
+			.topic(function(a) {
+				var arr = [];
+				for (var i = 0; i < 100; i++) {
+					arr[i] = a(i, function() {
+						arr[i].fired = true;
+					});
+				}
+				return arr;
+			})
+			.vow("fires after being called n times", function(arr) {
+				arr.forEach(function(k, v) {
+					for (var i = 0; i < k; i++) {
+						v();
+						if (i === k - 1) {
+							assert.ok(v.fired, "It did not fire when expected" + k + i);
+						} else {
+							assert.ok(!v.fired, "It fired when not expected" + k + i)
+						}
+					}
+				});
+			})
+			.parent()
+
+		.context("when called asynchronously")
+			.topic(function(a) {
+				var f = a(1, (function() {
+					f.fired = true;
+					this.callback(null, f);
+				}).bind(this));
+				setTimeout(f, 100);
+			})
+			.vow("was called", function(f) {
+				assert.ok(f.fired, "it was not called");
+			})
+			.suite()
+
+.export(module);

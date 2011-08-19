@@ -1,13 +1,13 @@
 {
   "name": "after",
   "description": "after - tiny flow control",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "author": "Raynos <raynos2@gmail.com>",
   "contributors": [
     { "name": "Raynos", "email": "raynos2@gmail.com", "url":"http://raynos.org" }
   ],
   "devDependencies": {
-      "vows-fluent": "0.1.0"
+      "vows-fluent": "0.1.1"
   },
   "keywords": ["flowcontrol", "after", "flow"],
   "repository": "git://github.com/Raynos/after.js.git",
