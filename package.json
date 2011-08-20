@@ -7,7 +7,7 @@
     { "name": "Raynos", "email": "raynos2@gmail.com", "url":"http://raynos.org" }
   ],
   "devDependencies": {
-      "vows-fluent": "0.1.5"
+      "vows-fluent": "0.1.7"
   },
   "keywords": ["flowcontrol", "after", "flow"],
   "repository": "git://github.com/Raynos/after.js.git",
