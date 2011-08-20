@@ -11,8 +11,12 @@ All the flow control you'll ever need
     cb();
     cb();
     cb(); // it works
+    
+## Blog post
 
-**Examples :**
+[Blog post](http://raynos.org/blog/2/Flow-control-in-node.js)
+
+## Examples :
 
  - [Determining the end of asynchronous operations](http://stackoverflow.com/questions/6852059/determining-the-end-of-asynchronous-operations-javascript/6852307#6852307)
  - [In javascript what are best practices for executing multiple asynchronous functions](http://stackoverflow.com/questions/6869872/in-javascript-what-are-best-practices-for-executing-multiple-asynchronous-functi/6870031#6870031)
