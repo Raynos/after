@@ -14,7 +14,7 @@ All the flow control you'll ever need
     
 ## Blog post
 
-[Blog post](http://raynos.org/blog/2/Flow-control-in-node.js)
+[Flow control in node.js](http://raynos.org/blog/2/Flow-control-in-node.js)
 
 ## Examples :
 
