@@ -55,6 +55,15 @@ suite("after").batch()
 			});
 		})
 
+		.context("after(0, f)")
+			.topic(function (a) {
+				a(0, this.callback)
+			})
+			.vow("fires immediatly", function() {
+				assert.ok(true, "It did not fire");
+			})
+			.parent()
+
 		.context("after(1, f)")
 			.topic(function (a) {
 				var f = a(1, function() {
@@ -72,7 +81,7 @@ suite("after").batch()
 		.context("after(n, f)")
 			.topic(function(a) {
 				var arr = [];
-				for (var i = 0; i < 100; i++) {
+				for (var i = 1; i < 100; i++) {
 					arr[i] = a(i, function() {
 						arr[i].fired = true;
 					});
@@ -81,7 +90,7 @@ suite("after").batch()
 			})
 			.vow("fires after being called n times", function(arr) {
 				arr.forEach(function(k, v) {
-					for (var i = 0; i < k; i++) {
+					for (var i = 1; i < k; i++) {
 						v();
 						if (i === k - 1) {
 							assert.ok(v.fired, "It did not fire when expected" + k + i);
