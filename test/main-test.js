@@ -1,6 +1,6 @@
 var tester = require("tester"),
 	assert = require('assert'),
-	after = require('../after.js');
+	after = require('../src/after.js');
 
 module.exports = {
 	"after": function () {
