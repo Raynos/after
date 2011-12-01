@@ -12,6 +12,8 @@ All the flow control you'll ever need
     cb();
     cb(); // it works
     
+## Status: production ready
+    
 ## Blog post
 
 [Flow control in node.js](http://raynos.org/blog/2/Flow-control-in-node.js)
