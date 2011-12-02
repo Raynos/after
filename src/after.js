@@ -1,37 +1,37 @@
 (function _anonymousWrapper(global) {
-	"use strict";
+    "use strict";   
 
-	var slice = [].slice;
+    var slice = [].slice;
 
-	if (typeof module !== "undefined" && module.exports) {
-		module.exports = after;
-	} else {
-		global.after = after;
-	}
+    if (typeof module !== "undefined" && module.exports) {
+        module.exports = after;
+    } else {
+        global.after = after;
+    }
 
-	function after(count, callback) {
-		var counter = 0,
-			results = [];
+    function after(count, callback) {
+        var counter = 0,
+            results = [];
 
-		if (count <= 0)	 {
-			return callback();
-		}
+        if (count <= 0)  {
+            return callback();
+        }
 
-		return afterProxy;
+        return afterProxy;
 
-		function afterProxy(arg) {
-			if (arguments.length === 1) {
-				results.push(arg);
-			} else if (arguments.length > 1) {
-				results.push(slice.call(arguments));
-			}
+        function afterProxy(arg) {
+            if (arguments.length === 1) {
+                results.push(arg);
+            } else if (arguments.length > 1) {
+                results.push(slice.call(arguments));
+            }
 
-			counter++;
+            counter++;
 
-			if (counter >= count) {
-				callback.apply(this, results);
-			}
-		}
-	}
+            if (counter >= count) {
+                callback.apply(this, results);
+            }
+        }
+    }
 
 }(global || window));
