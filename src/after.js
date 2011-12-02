@@ -1,4 +1,5 @@
 (function _anonymousWrapper(global) {
+	"use strict";
 
 	var slice = [].slice;
 
