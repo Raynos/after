@@ -1,18 +1,36 @@
-module.exports = function _after(count, f) {
-  var c = 0, results = [];
+(function _anonymousWrapper(global) {
 
-  if (count <= 0) {
-    return f();
-  } else {
-    return function _callback() {
-      switch (arguments.length) {
-        case 0: break;
-        case 1: results.push(arguments[0]); break;
-        default: results.push(Array.prototype.slice.call(arguments)); break;
-      }
-      if (++c >= count) {
-        f.apply(this, results);
-      }
-    };  
-  }
-};
+	var slice = [].slice;
+
+	if (typeof module !== "undefined" && module.exports) {
+		module.exports = after;
+	} else {
+		global.after = after;
+	}
+
+	function after(count, callback) {
+		var counter = 0,
+			results = [];
+
+		if (count <= 0)	 {
+			return callback();
+		}
+
+		return afterProxy;
+
+		function afterProxy(arg) {
+			if (arguments.length === 1) {
+				results.push(arg);
+			} else if (arguments.length > 1) {
+				results.push(slice.call(arguments));
+			}
+
+			counter++;
+
+			if (counter >= count) {
+				callback.apply(this, results);
+			}
+		}
+	}
+
+}(global || window));
