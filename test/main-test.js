@@ -147,6 +147,46 @@ module.exports = {
 		function finished(err) {
 			assert(err === null);
 		}
+	},
+	"map": function () {
+		assert(after.map);
+
+		var arr = [1,2,3,4],
+			obj = {
+				"foo": "bar",
+				"baz": "boz"
+			};
+
+		after.map(arr, arrayIterator, arrayFinished);
+
+		after.map(obj, objIterator, objFinished);
+
+		function arrayIterator(value, index, callback) {
+			callback(null, value*2);
+		}
+
+		function objIterator(value, index, callback) {
+			callback(null, value + value);
+		}
+
+		function arrayFinished(err, result) {
+			assert(err === null);
+			assert(result.length === arr.length);
+			result.forEach(checkValue);
+
+			function checkValue(value, index) {
+				assert(value === arr[index] * 2);
+			}
+		}
+
+		function objFinished(err, result) {
+			assert(err === null);
+			Object.keys(result).forEach(checkValue);
+
+			function checkValue(name) {
+				assert(result[name] === obj[name] + obj[name]);
+			}
+		}
 	}
 }
 

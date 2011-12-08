@@ -47,13 +47,23 @@ Minimal flow control. A lot of the libraries out there are over kill. I want a s
 
 The following methods are asynchronous parallel versions of the `Array.prototype` methods.
 
-They all take an `iterator` and a `finishedCallback`
+They all take parameters `(set, iterator, optionalContext, finishedCallback)`
 
-These `iterator`'s are of the form `(value, index, set, callback)`. The `callback` can be invoked with `(err, result)`
-
-The `finishedCallback` is of the form `(err, result)` as invoked when all iterators have invoked their individual callback.
+ - set : the set to operate on
+ - iterator : iterator function that is called for every value in the set
+ 	iterator has a signature of `(value, index, callback)`. The callback should be 
+ 	invoked when your done iterating over that item. You may invoke the callback with
+ 	`(err, result)`
+ - optionalContext : optional parameter, if given it will be the value of `this` 
+ 	inside the iterator
+ - finishedCallback : this callback is invoked when every iterator has invoked it's
+ 	individual callback. It has a signature of `(err, result)`. The `err` parameter
+ 	is whatever passed an error first or `null`. The result parameter is specific
+ 	to each set utility function
 
 ### after.forEach(set, iterator, optionalContext, finishedCallback) <a name="after.forEach" href="#after.forEach"><small><sup>link</sup></small></a>
+
+For `.forEach` the `result` parameter of the finishedCallback is always undefined.
 
 	var set = {
 		google: googleUser,
@@ -63,7 +73,7 @@ The `finishedCallback` is of the form `(err, result)` as invoked when all iterat
 
 	after.forEach(set, synchronizeOAuth, finished)
 
-	function synchronizeOAuth(userObject, oAuthName, _, callback) {
+	function synchronizeOAuth(userObject, oAuthName, callback) {
 		getOAuth(key).sychrnonize(userObject, callback);
 	}
 

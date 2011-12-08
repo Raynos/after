@@ -5,6 +5,7 @@
 
     after.forEach = forEach;
     after.each = forEach;
+    after.map = map;
 
     if (typeof module !== "undefined" && module.exports) {
         module.exports = after;
@@ -57,6 +58,38 @@
 
         function callCallback(err) {
             err ? callback(err) : callback(null);
+        }
+    }
+
+    function map(set, iterator, context, callback) {
+        if (typeof context === "function") {
+            callback = context;
+            context = undefined;
+        }
+
+        var keys = Object.keys(set),
+            result = Array.isArray(set) ? [] : {},
+            next = after(keys.length, callCallback);
+
+        keys.forEach(proxyIterator);
+
+        function proxyIterator(keyName) {
+            iterator.call(context, set[keyName], keyName, proxyCallback);
+
+            function proxyCallback(err, value) {
+                if (err) {
+                    return next(err);
+                }
+                result[keyName] = value;
+                next();
+            }
+        }
+
+        function callCallback(err) {
+            if (err) {
+                return callback(err);
+            }
+            callback(null, result);
         }
     }
 
