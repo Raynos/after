@@ -8,66 +8,86 @@ module.exports = {
 		assert(typeof after === "function");
 	},
 	"after no arguments": function () {
-		after(1, function () {
+		after(1, testItIsInvoked)();
+
+		function testItIsInvoked() {
 			assert(arguments.length === 0);
-		})();
+		}
 	},
 	"after one argument": function () {
-		["string", null, undefined, /foo/, [], {}, 1].forEach(function(val) {
-			after(1, function(value) {
+		["string", null, undefined, /foo/, [], {}, 1].forEach(runTest);
+
+		function runTest(val) {
+			after(1, testValueIsReturned)(val);	
+
+			function testValueIsReturned(value) {
 				assert(val === value);
-			})(val);	
-		});
+			}
+		}
 	},
 	"after multiple arguments": function () {
 		var arr = ["lol", "foo", "baz"];
-		after(1, function(array) {
-			array.forEach(function (key) {
+		after(1, testMultipleValues).apply(null, arr); 
+
+		function testMultipleValues(array) {
+			array.forEach(testValueIsAsExpected);
+
+			function testValueIsAsExpected(key) {
 				assert(array[key] === arr[key]);
-			})
-		}).apply(null, arr); 
+			}
+		}
 	},
 	"after multiple calls": function () {
 		var fs = [];
 		for (var i = 1; i < 100; i++) {
-			(function(i) {
-				fs[i] = after(i, function() {
-					assert(arguments.length === i);
-					for (var j = 0; j < i; j++) {
-						assert(j === arguments[j]);
-					}
-				});	
-			}).call(null, i);
+			constructData(i);
 		}
-		fs.forEach(function(v, k) {
+		fs.forEach(callFunctionNTimes);
+
+		function callFunctionNTimes(v, k) {
 			for (var i = 0; i < k; i++) {
 				v(i);
 			}
-		});
+		}
+
+		function constructData(i) {
+			fs[i] = after(i, testReturnedData);	
+
+			function testReturnedData() {
+				assert(arguments.length === i);
+				for (var j = 0; j < i; j++) {
+					assert(j === arguments[j]);
+				}
+			}
+		}
 	},
 	"after(0, f)": function () {
 		var bool = true;
-		after(0, function firesImmediatly() {
-			assert(bool);
-		});
+		after(0, testItFiresImmediatly);
 		bool = false;
+
+		function testItFiresImmediatly() {
+			assert(bool);
+		}
 	},
 	"after (1, f)": function () {
-		var f = after(1, function () {
-			f.fired = true;
-		});
-		assert(!f.fired);
-		f();
-		assert(f.fired);
+		var next = after(1, setFiredFlag);
+		assert(!next.fired);
+		next();
+		assert(next.fired);
+
+		function setFiredFlag() {
+			next.fired = true;
+		}
 	},
 	"after (n, f)": function () {
 		var arr = [];
 		for (var i = 1; i < 100; i++) {
-			arr[i] = after(i, function() {
-				arr[i].fired = true;
-			});
+			arr[i] = after(i, setFiredFlag);
 		}
-		arr.forEach(function(k, v) {
+		arr.forEach(testItFiresAtCorrectPoint);
+
+		function testItFiresAtCorrectPoint(k, v) {
 			for (var i = 1; i < k; i++) {
 				v();
 				if (i === k - 1) {
@@ -76,18 +96,58 @@ module.exports = {
 					assert(!v.fired)
 				}
 			}
-		});
+		}
+
+		function setFiredFlag() {
+			arr[i].fired = true;
+		}
 	},
 	"after async": function (done) {
 		var bool = false;
-		done(function () {
+		done(checkBoolIsSet);
+		var next = after(1, setBool);
+		setTimeout(next, 100);
+
+		function checkBoolIsSet() {
 			assert(bool);
-		});
-		var f = after(1, function () {
+		}
+
+		function setBool() {
 			bool = true;
 			done();
-		});
-		setTimeout(f, 100);
+		}
+	},
+	"forEach": function () {
+		assert(after.forEach);
+
+		var arr = [1,2,3,4],
+			obj = {
+				"foo": "bar",
+				"baz": "boz"
+			},
+			context = {};
+
+		after.forEach(arr, arrayIterator, finished);
+
+		after.forEach(obj, objIterator, context, finished);
+
+		function arrayIterator(value, index, list, callback) {
+			assert(arr[index] === value);
+			assert(list === arr);
+			assert(typeof callback === "function");
+			callback();
+		}
+
+		function objIterator(value, index, list, callback) {
+			assert(obj[index] === value);
+			assert(list === obj);
+			assert(this === context);
+			callback();
+		}
+
+		function finished(err) {
+			assert(err === null);
+		}
 	}
 }
 

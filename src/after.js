@@ -3,6 +3,8 @@
 
     var slice = [].slice;
 
+    after.forEach = forEach;
+
     if (typeof module !== "undefined" && module.exports) {
         module.exports = after;
     } else {
@@ -31,6 +33,29 @@
             if (counter >= count) {
                 callback.apply(this, results);
             }
+        }
+    }
+
+    function forEach(set, iterator, context, callback) {
+        if (typeof context === "function") {
+            callback = context;
+            context = undefined;
+        }
+        var keys = Object.keys(set),
+            next = after(keys.length, callCallback);
+
+        keys.forEach(proxyIterator);
+        
+        function proxyIterator(keyName) {
+            iterator.call(context, set[keyName], keyName, set, proxyCallback);
+        }
+
+        function proxyCallback(err) {
+            err ? next(err) : next();
+        }
+
+        function callCallback(err) {
+            err ? callback(err) : callback(null);
         }
     }
 
