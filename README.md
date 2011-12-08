@@ -7,14 +7,14 @@ All the flow control you'll ever need
 ## Example
 
     var after = require("after"),
-    	next = after(3, logItWorks);
+        next = after(3, logItWorks);
 
     next();
     next();
     next(); // it works
 
     function logItWorks() {
-    	console.log("it works!");
+        console.log("it works!");
     }
 
 ## Motivation 
@@ -27,21 +27,21 @@ Minimal flow control. A lot of the libraries out there are over kill. I want a s
 
 `after` takes a count and a callback and returns a function `next`. The callback get's invoked when the `next` function is invoked count number of times. The callback aggregates the data given to `next` as un-ordered parameters.
 
-	var next = after(3, printData);
+    var next = after(3, printData);
 
-	next("foo", "bar", { ... })
-	next({ ... });
-	next(42);
+    next("foo", "bar", { ... })
+    next({ ... });
+    next(42);
 
-	function printData() {
-		for (var i = 0, len = arguments.length; i < len; i++) {
-			console.log(arguments[i]);	
-		}
-		// in some order
-		// 42
-		// { ... }
-		// [ "foo", "bar", { ... }]
-	}
+    function printData() {
+        for (var i = 0, len = arguments.length; i < len; i++) {
+            console.log(arguments[i]);  
+        }
+        // in some order
+        // 42
+        // { ... }
+        // [ "foo", "bar", { ... }]
+    }
 
 ### after set utilities
 
@@ -51,35 +51,35 @@ They all take parameters `(set, iterator, optionalContext, finishedCallback)`
 
  - set : the set to operate on
  - iterator : iterator function that is called for every value in the set
- 	iterator has a signature of `(value, index, callback)`. The callback should be 
- 	invoked when your done iterating over that item. You may invoke the callback with
- 	`(err, result)`
+    iterator has a signature of `(value, index, callback)`. The callback should be 
+    invoked when your done iterating over that item. You may invoke the callback with
+    `(err, result)`
  - optionalContext : optional parameter, if given it will be the value of `this` 
- 	inside the iterator
+    inside the iterator
  - finishedCallback : this callback is invoked when every iterator has invoked it's
- 	individual callback. It has a signature of `(err, result)`. The `err` parameter
- 	is whatever passed an error first or `null`. The result parameter is specific
- 	to each set utility function
+    individual callback. It has a signature of `(err, result)`. The `err` parameter
+    is whatever passed an error first or `null`. The result parameter is specific
+    to each set utility function
 
 ### after.forEach(set, iterator, optionalContext, finishedCallback) <a name="after.forEach" href="#after.forEach"><small><sup>link</sup></small></a>
 
 For `.forEach` the `result` parameter of the finishedCallback is always undefined.
 
-	var set = {
-		google: googleUser,
-		github: githubUser,
-		facebook: facebookUser
-	};
+    var set = {
+        google: googleUser,
+        github: githubUser,
+        facebook: facebookUser
+    };
 
-	after.forEach(set, synchronizeOAuth, finished)
+    after.forEach(set, synchronizeOAuth, finished)
 
-	function synchronizeOAuth(userObject, oAuthName, callback) {
-		getOAuth(key).sychrnonize(userObject, callback);
-	}
+    function synchronizeOAuth(userObject, oAuthName, callback) {
+        getOAuth(key).sychrnonize(userObject, callback);
+    }
 
-	function finished(err) {
-		if (err) throw err;
-	}
+    function finished(err) {
+        if (err) throw err;
+    }
 
 ## Installation
 
