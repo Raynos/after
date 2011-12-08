@@ -23,7 +23,7 @@ Minimal flow control. A lot of the libraries out there are over kill. I want a s
 
 ## Documentation
 
-### `after(count, callback)` <a name="after" href="#after"><small><sup>link</sup></small></a>
+### after(count, callback) <a name="after" href="#after"><small><sup>link</sup></small></a>
 
 `after` takes a count and a callback and returns a function `next`. The callback get's invoked when the `next` function is invoked count number of times. The callback aggregates the data given to `next` as un-ordered parameters.
 
@@ -53,7 +53,7 @@ These `iterator`'s are of the form `(value, index, set, callback)`. The `callbac
 
 The `finishedCallback` is of the form `(err, result)` as invoked when all iterators have invoked their individual callback.
 
-### `after.forEach(set, iterator, optionalContext, finishedCallback) <a name="after.forEach" href="#after.forEach"><small><sup>link</sup></small></a>
+### after.forEach(set, iterator, optionalContext, finishedCallback) <a name="after.forEach" href="#after.forEach"><small><sup>link</sup></small></a>
 
 	var set = {
 		google: googleUser,
