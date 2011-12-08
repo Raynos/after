@@ -80,7 +80,6 @@ module.exports = {
 	},
 	"after async": function (done) {
 		var bool = false;
-		throw("foo");
 		done(function () {
 			assert(bool);
 		});
