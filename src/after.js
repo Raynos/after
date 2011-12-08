@@ -4,6 +4,7 @@
     var slice = [].slice;
 
     after.forEach = forEach;
+    after.each = forEach;
 
     if (typeof module !== "undefined" && module.exports) {
         module.exports = after;
@@ -47,7 +48,7 @@
         keys.forEach(proxyIterator);
         
         function proxyIterator(keyName) {
-            iterator.call(context, set[keyName], keyName, set, proxyCallback);
+            iterator.call(context, set[keyName], keyName, proxyCallback);
         }
 
         function proxyCallback(err) {

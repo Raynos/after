@@ -119,6 +119,7 @@ module.exports = {
 	},
 	"forEach": function () {
 		assert(after.forEach);
+		assert(after.each);
 
 		var arr = [1,2,3,4],
 			obj = {
@@ -131,16 +132,14 @@ module.exports = {
 
 		after.forEach(obj, objIterator, context, finished);
 
-		function arrayIterator(value, index, list, callback) {
+		function arrayIterator(value, index, callback) {
 			assert(arr[index] === value);
-			assert(list === arr);
 			assert(typeof callback === "function");
 			callback();
 		}
 
-		function objIterator(value, index, list, callback) {
+		function objIterator(value, index, callback) {
 			assert(obj[index] === value);
-			assert(list === obj);
 			assert(this === context);
 			callback();
 		}
