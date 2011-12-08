@@ -1,16 +1,19 @@
 {
-  "name": "after",
-  "description": "after - tiny flow control",
-  "version": "0.1.8",
-  "author": "Raynos <raynos2@gmail.com>",
-  "contributors": [
-    { "name": "Raynos", "email": "raynos2@gmail.com", "url":"http://raynos.org" }
-  ],
-  "devDependencies": {
-      "tester": "0.0.4"
-  },
-  "keywords": ["flowcontrol", "after", "flow", "control", "arch"],
-  "repository": "git://github.com/Raynos/after.js.git",
-  "main": "src/after",
-  "engines": { "node": "0.6.x" }
+    "name": "after",
+    "description": "after - tiny flow control",
+    "version": "0.2.0",
+    "author": "Raynos <raynos2@gmail.com>",
+    "contributors": [
+      { "name": "Raynos", "email": "raynos2@gmail.com", "url":"http://raynos.org" }
+    ],
+    "scripts": {
+        "test": "node test/main-test.js"  
+    },
+    "devDependencies": {
+        "tester": "0.0.4"
+    },
+    "keywords": ["flowcontrol", "after", "flow", "control", "arch"],
+    "repository": "git://github.com/Raynos/after.js.git",
+    "main": "src/after",
+    "engines": { "node": "0.6.x" }
 }
