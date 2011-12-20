@@ -1,4 +1,4 @@
-(function _anonymousWrapper(global) {
+!function _anonymousWrapper() {
     "use strict";   
 
     var slice = [].slice;
@@ -10,7 +10,7 @@
     if (typeof module !== "undefined" && module.exports) {
         module.exports = after;
     } else {
-        global.after = after;
+        window.after = after;
     }
 
     function after(count, callback) {
@@ -93,4 +93,4 @@
         }
     }
 
-}(global || window));
+}();
