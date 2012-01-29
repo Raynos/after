@@ -65,6 +65,8 @@ Note that `reduce` has an `optionalInitialValue` instead of an `optionalContext`
 
 Also reduce's signature is `(memo, value, index, obj, callback)` or any of the shorter forms like `(memo, value, callback)`.
 
+Apart from reduce and reduceRight all of these set iterators run their iterators in parallel over the set
+
 ### after.forEach(set, iterator, optionalContext, finishedCallback) <a name="after.forEach" href="#after.forEach"><small><sup>link</sup></small></a>
 
 For `.forEach` the `result` parameter of the finishedCallback is always undefined.

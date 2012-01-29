@@ -91,6 +91,7 @@ suite("After", function () {
         });
 
         test("errors", function (done) {
+            done = after(3, call(done));
             after.forEach(obj, function (next) {
                 next(new Error("lulz"));
             }, obj, function (err) {
@@ -134,7 +135,12 @@ suite("After", function () {
 
         test("mapped object has same prototype", function (done) {
             var o = {};
-            after.map(Object.create(o, { foo: { value: 42 } }), function (next) {
+            after.map(Object.create(o, { 
+                foo: { 
+                    value: 42, 
+                    enumerable: true
+                } 
+            }), function (next) {
                 next(null, 42); 
             }, function (err, obj) {
                 assert(Object.getPrototypeOf(obj) === o);
@@ -145,10 +151,14 @@ suite("After", function () {
 
     suite("reduce", function () {
         test("reduce on object", function (done) {
+            var count = 0;
             after.reduce(obj, function (memo, value, next) {
+                count++;
                 next(null, memo + value);
             }, function (err, str) {
                 assert(str === "barbar1bar2");
+                console.log(count);
+                assert(count === 2);
                 done();
             });
         });
