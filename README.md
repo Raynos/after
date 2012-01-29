@@ -43,6 +43,8 @@ Minimal flow control. A lot of the libraries out there are over kill. I want a s
         // [ "foo", "bar", { ... }]
     }
 
+Note that the internal counter is exposed as `next.count` so you can manually increment or decrement it in a dynamic fashion. This is useful for recursively algorithms that want to increment the counter.
+
 ### after set utilities
 
 The following methods are asynchronous parallel versions of the `Array.prototype` methods.
@@ -50,16 +52,18 @@ The following methods are asynchronous parallel versions of the `Array.prototype
 They all take parameters `(set, iterator, optionalContext, finishedCallback)`
 
  - set : the set to operate on
- - iterator : iterator function that is called for every value in the set
-    iterator has a signature of `(value, index, callback)`. The callback should be 
-    invoked when your done iterating over that item. You may invoke the callback with
-    `(err, result)`
+ - iterator : iterator function that is called for every value in the set.
+    iterator has multiple signatures. Either `(callback)` or `(value, callback)` or `(value, index, callback)` or `(value, index, obj, callback)`. The last argument is always the callback. The callback should be invoked when your done iterating over that item. You may invoke the callback with `(err, result)`
  - optionalContext : optional parameter, if given it will be the value of `this` 
     inside the iterator
  - finishedCallback : this callback is invoked when every iterator has invoked it's
     individual callback. It has a signature of `(err, result)`. The `err` parameter
     is whatever passed an error first or `null`. The result parameter is specific
     to each set utility function
+
+Note that `reduce` has an `optionalInitialValue` instead of an `optionalContext`.
+
+Also reduce's signature is `(memo, value, index, obj, callback)` or any of the shorter forms like `(memo, value, callback)`.
 
 ### after.forEach(set, iterator, optionalContext, finishedCallback) <a name="after.forEach" href="#after.forEach"><small><sup>link</sup></small></a>
 

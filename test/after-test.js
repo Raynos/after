@@ -88,6 +88,15 @@ suite("After", function () {
                 assert(this === obj);
                 next();
             }, obj, call(done));
+        });
+
+        test("errors", function (done) {
+            after.forEach(obj, function (next) {
+                next(new Error("lulz"));
+            }, obj, function (err) {
+                assert(err.message === "lulz");
+                done();
+            })
         })
     });
 
@@ -105,8 +114,8 @@ suite("After", function () {
     suite("map", function () {
         test("map on object", function (done) {
             after.map(obj, function (value, next) {
-                next(value + value);
-            }, function (o) {
+                next(null, value + value);
+            }, function (err, o) {
                 Object.keys(o).forEach(function (key) {
                     assert((obj[key] + obj[key]) === o[key]);
                 });
@@ -118,8 +127,8 @@ suite("After", function () {
     suite("reduce", function () {
         test("reduce on object", function (done) {
             after.reduce(obj, function (memo, value, next) {
-                next(memo + value);
-            }, function (str) {
+                next(null, memo + value);
+            }, function (err, str) {
                 assert(str === "barbar1bar2");
                 done();
             });
