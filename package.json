@@ -14,6 +14,6 @@
     },
     "keywords": ["flowcontrol", "after", "flow", "control", "arch"],
     "repository": "git://github.com/Raynos/after.js.git",
-    "main": "src/after",
+    "main": "lib/after",
     "engines": { "node": "0.6" }
 }
