@@ -138,7 +138,7 @@ For `.reduce` the `result` parameter is the reduced value.
 
 `.reduceRight` is the same as `reduce` excepts runs over the object in reverse.
 
-### after.filter(...) <a name="after.filter" href="#after.filter"><small><sup>link</sup></small></a>
+### after.filter(set, iterator, optionalContext, finishedCallback) <a name="after.filter" href="#after.filter"><small><sup>link</sup></small></a>
 
 For `.filter` the `result` is the filtered object/array.
 
@@ -160,7 +160,7 @@ For `.filter` the `result` is the filtered object/array.
         ...
     }
 
-### after.every(...) <a name="after.every" href="#after.every"><small><sup>link</sup></small></a>
+### after.every(set, iterator, optionalContext, finishedCallback) <a name="after.every" href="#after.every"><small><sup>link</sup></small></a>
 
 Every passes `true` to the finished callback if every callback in the iteration passed `true`.
 
@@ -181,7 +181,7 @@ Every passes `true` to the finished callback if every callback in the iteration 
         ...
     }
 
-### After.some(...) <a name="after.some" href="#after.some"><small><sup>link</sup></small></a>
+### After.some(set, iterator, optionalContext, finishedCallback) <a name="after.some" href="#after.some"><small><sup>link</sup></small></a>
 
 Some passes `false` to the finished callback if every callback in the iteration passed `false`.
 
