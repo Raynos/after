@@ -140,7 +140,7 @@ For `.reduce` the `result` parameter is the reduced value.
 
 ## Tests
 
-`node test/main-test.js`
+`make test`
 
 ## Blog post
 
