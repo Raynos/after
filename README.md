@@ -120,9 +120,9 @@ For `.reduce` the `result` parameter is the reduced value.
         facebook: facebookUser
     };
 
-    after.reduce(set, getOAuthUser, 0, finished);
+    after.reduce(set, aggregateFriends, 0, finished);
 
-    function getOauthUser(memo, userObject, oAuthName, callback) {
+    function aggregateFriends(memo, userObject, oAuthName, callback) {
         getOAuth(oAuthName)
             .getNumberOfFriends(userObject, function (err, friends) {
                 callback(err, friends + memo);
@@ -132,7 +132,75 @@ For `.reduce` the `result` parameter is the reduced value.
     function finished (err, numberOfFriends) {
         if (err) throw err;
         ...
-    }    
+    }
+    
+### after.reduceRight(...) <a name="after.reduceRight" href="#after.reduceRight"><small><sup>link</sup></small></a>
+
+`.reduceRight` is the same as `reduce` excepts runs over the object in reverse.
+
+### after.filter(...) <a name="after.filter" href="#after.filter"><small><sup>link</sup></small></a>
+
+For `.filter` the `result` is the filtered object/array.
+
+
+    var set = {
+        google: googleUser,
+        github: githubUser,
+        facebook: facebookUser
+    };
+
+    after.filter(set, isRegistered, finished);
+
+    function isRegistered(memo, userObject, oAuthName, callback) {
+        getOAuth(oAuthName).userExists(userObject, callback);
+    }
+
+    function finished (err, usersThatExist) {
+        if (err) throw err;
+        ...
+    }
+
+### after.every(...) <a name="after.every" href="#after.every"><small><sup>link</sup></small></a>
+
+Every passes `true` to the finished callback if every callback in the iteration passed `true`.
+
+    var set = {
+        google: googleUser,
+        github: githubUser,
+        facebook: facebookUser
+    };
+
+    after.every(set, isRegistered, finished);
+
+    function isRegistered(memo, userObject, oAuthName, callback) {
+        getOAuth(oAuthName).userExists(userObject, callback);
+    }
+
+    function finished (err, registeredOnAllServices) {
+        if (err) throw err;
+        ...
+    }
+
+### After.some(...) <a name="after.some" href="#after.some"><small><sup>link</sup></small></a>
+
+Some passes `false` to the finished callback if every callback in the iteration passed `false`.
+
+    var set = {
+        google: googleUser,
+        github: githubUser,
+        facebook: facebookUser
+    };
+
+    after.every(set, isRegistered, finished);
+
+    function isRegistered(memo, userObject, oAuthName, callback) {
+        getOAuth(oAuthName).userExists(userObject, callback);
+    }
+
+    function finished (err, registeredOnAnyServices) {
+        if (err) throw err;
+        ...
+    }
 
 ## Installation
 

@@ -176,6 +176,34 @@ suite("After", function () {
             });
         }) 
     });
+
+    suite("every", function () {
+        test("every on object", function (done) {
+            var called = 0;
+            after.every(obj, function (next) {
+                called++;
+                next(null, true);
+            }, function (err, obj) {
+                assert(obj === true);
+                assert(called === 3);
+                done();
+            });
+        });
+    });
+
+    suite("some", function () {
+        test("some on object", function (done) {
+            var called = 0;
+            after.some(obj, function (next) {
+                called++;
+                next(null, true);
+            }, function (err, obj) {
+                assert(obj === true);
+                assert(called === 1);
+                done();
+            }); 
+        })
+    })
 });
 
 function call(f) {
