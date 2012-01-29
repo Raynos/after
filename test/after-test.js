@@ -122,6 +122,25 @@ suite("After", function () {
                 done();
             });
         });
+
+        test("mapping over an array returns an array", function (done) {
+            after.map([1], function (value, next) {
+                next(null, value);
+            }, function (err, arr) {
+                assert(Array.isArray(arr));
+                done();
+            });
+        });
+
+        test("mapped object has same prototype", function (done) {
+            var o = {};
+            after.map(Object.create(o, { foo: { value: 42 } }), function (next) {
+                next(null, 42); 
+            }, function (err, obj) {
+                assert(Object.getPrototypeOf(obj) === o);
+                done();
+            });
+        });
     });
 
     suite("reduce", function () {
@@ -133,7 +152,30 @@ suite("After", function () {
                 done();
             });
         });
-    })
+    });
+
+    suite("reduceRight", function () {
+        test("reduceRight on object", function (done) {
+            after.reduceRight(obj, function (memo, value, next) {
+                next(null, memo + value);
+            }, function (err, str) {
+                assert(str === "bar2bar1bar");
+                done();
+            }); 
+        });
+    });
+
+    suite("filter", function () {
+        test("filter on object", function (done) {
+            after.filter(obj, function (value, next) {
+                next(null, value === "bar");
+            }, function (err, obj) {
+                assert(Object.keys(obj).length === 1);
+                assert(obj.foo === "bar");
+                done();
+            });
+        }) 
+    });
 });
 
 function call(f) {

@@ -78,12 +78,61 @@ For `.forEach` the `result` parameter of the finishedCallback is always undefine
     after.forEach(set, synchronizeOAuth, finished)
 
     function synchronizeOAuth(userObject, oAuthName, callback) {
-        getOAuth(key).sychrnonize(userObject, callback);
+        getOAuth(oAuthName).sychronize(userObject, callback);
     }
 
     function finished(err) {
         if (err) throw err;
     }
+
+### after.map(set, iterator, optionalContext, finishedCallback) <a name="after.map" href="#after.map"><small><sup>link</sup></small></a>
+
+For `.map` the `result` parameter of the finishedCalllback is the object your mapping too.
+
+map will return a result that either inherits from your objects prototype or is an array depending on whether the call value is an object or an array
+
+    var set = {
+        google: googleUser,
+        github: githubUser,
+        facebook: facebookUser
+    };
+
+    after.map(set, getOAuthUser, finished);
+
+    function getOauthUser(userObject, oAuthName, callback) {
+        getOAuth(oAuthName).getUser(userObject, callback);
+    }
+
+    function finished (err, oAuthUserObjects) {
+        if (err) throw err;
+        for (var service in oAuthUserObjects) {
+            ...
+        }
+    }
+
+### after.reduce(set, iterator, optionalInitialValue, finishedCallback) <a name="after.reduce" href="#after.reduce"><small><sup>link</sup></small></a>
+
+For `.reduce` the `result` parameter is the reduced value.
+
+    var set = {
+        google: googleUser,
+        github: githubUser,
+        facebook: facebookUser
+    };
+
+    after.reduce(set, getOAuthUser, 0, finished);
+
+    function getOauthUser(memo, userObject, oAuthName, callback) {
+        getOAuth(oAuthName)
+            .getNumberOfFriends(userObject, function (err, friends) {
+                callback(err, friends + memo);
+            });
+    }
+
+    function finished (err, numberOfFriends) {
+        if (err) throw err;
+        ...
+    }    
 
 ## Installation
 
