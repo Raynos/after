@@ -50,6 +50,17 @@ suite("After", function () {
             next(data);
             next(data, data);
         });
+
+        test("unpack", function () {
+            var next = after(2, function () {
+                var data = after.unpack(arguments);
+                assert(data.foo === "foo");
+                assert(data.bar === "bar");
+            });
+
+            next("foo", "foo");
+            next("bar", "bar");
+        })
     });
 
     var obj = {

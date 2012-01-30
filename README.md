@@ -45,6 +45,20 @@ Minimal flow control. A lot of the libraries out there are over kill. I want a s
 
 Note that the internal counter is exposed as `next.count` so you can manually increment or decrement it in a dynamic fashion. This is useful for recursively algorithms that want to increment the counter.
 
+### after.unpack(arguments) <a name="unpack" href="#unpack"><small><sup>link</sup></small></a>
+
+Unpack data from after using a convention
+
+``` javascript
+var next = after(2, function () {
+    var data = after.unpack(arguments); 
+    /* data = { foo: "bar", baz: "boz"}; */
+});
+
+next("foo", "bar");
+next("baz", "boz");
+```
+
 ### after set utilities
 
 The following methods are asynchronous parallel versions of the `Array.prototype` methods.
