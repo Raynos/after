@@ -121,6 +121,14 @@ suite("After", function () {
                 done(); 
             });
         });
+
+        test("forEach on empty array", function (done) {
+            after.forEach([], function () {
+
+            }, function () {
+                done()
+            })
+        })
     });
 
     suite("map", function () {
@@ -168,7 +176,6 @@ suite("After", function () {
                 next(null, memo + value);
             }, function (err, str) {
                 assert(str === "barbar1bar2");
-                console.log(count);
                 assert(count === 2);
                 done();
             });
