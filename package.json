@@ -1,7 +1,7 @@
 {
     "name": "after",
     "description": "after - tiny flow control",
-    "version": "0.3.3",
+    "version": "0.3.4",
     "author": "Raynos <raynos2@gmail.com>",
     "contributors": [
       { "name": "Raynos", "email": "raynos2@gmail.com", "url":"http://raynos.org" }
@@ -14,6 +14,5 @@
     },
     "keywords": ["flowcontrol", "after", "flow", "control", "arch"],
     "repository": "git://github.com/Raynos/after.js.git",
-    "main": "lib/after",
-    "engines": { "node": "0.6" }
+    "main": "lib/after"
 }

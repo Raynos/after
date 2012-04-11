@@ -1,0 +1,99 @@
+var Array = require("Array")
+
+after(count, callback) {
+    result = []
+
+    proxy(...args) {
+        results.push(...args)
+
+        --proxy.count == 0 && callback(...results)
+    }
+
+    prox.count = count
+
+    return (count == 0) ? callback() : proxy
+}
+
+handleMultipleArguments(f) {
+    return (obj, callback, context, next) {
+        if (typeof context == "function") {
+            next = context
+            context = nil
+        }
+
+        keys = keysof obj
+        if (sizeof keys == 0) {
+            return next(nil, obj)
+        }
+        f(obj, callback, context, next, keys, sizeof length)
+    }
+}
+
+invokeCallback(callback, context, ...params) {
+    var callbackLength = callback.length;
+
+    if (typeof obj == "function") {
+        next = obj
+        obj = nil
+    }
+
+    if (context == nil) {
+        return callback(...Array.slice(params, callbackLength))
+    }
+    callback(context, ...Array.slice(params, callbackLength - 1))
+}
+
+createReturnValue(obj) {
+    if (typeof obj == "array") {
+        return []
+    }
+    return new obj;
+}
+
+after.forEach = handleMultipleArguments((
+    obj, callback, context, next, keys, length
+) {
+    Array.forEach(keys, (key) {
+        value = obj[key]
+
+        invokeCallback(callback, context, value, key, obj, (err) {
+            if (err) return next(err)
+            if (--length === 0) {
+                next()
+            }
+        })
+    })
+})
+
+after.map = handleMultipleArguments((
+    obj, callback, context, next, keys, length
+) {
+    returnValue = createReturnValue(obj)
+    Array.forEach(keys, (key) {
+        value = obj[key]
+
+        invokeCallback(callback, context, value, key, obj, (err, value) {
+            if (err) return next(err)
+            returnValue[key] = value
+            if (--length == 0) {
+                next(null, returnValue)
+            }
+        })
+    })
+})
+
+after.reduce = handleMultipleArguments(reduce)
+after.filter = handleMultipleArguments(filter)
+after.some = handleMultipleArguments(some)
+after.every = handleMultipleArguments(every)
+after.reduceRight = handleMultipleArguments(reduceRight)
+
+after.unpack = (data) {
+    obj = {}
+    Array.forEach(data, (tuple) {
+        obj[tuple[0]] = tuple[1]
+    })
+    return obj
+}
+
+return after
