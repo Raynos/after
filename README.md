@@ -224,16 +224,22 @@ Creates a flow through all the functions in the array. Each function in the arra
 
     after.flow([
         function (next) {
-            next("foo")
+            next(null, "foo")
         },
-        function (foo, next) {
+        function (err, foo, next) {
             assert.equal(foo, "foo")
             next()
         },
-        function () {
+        function (next) {
             assert.deepEqual(this, context)
+            next(new Error("an error"))
+        },
+        function () {
+            assert(false, "this is never called")
         }
-    ], context)
+    ], context, function errorCallback(err) {
+        assert.equal(err.message, "an error")
+    })
 
 ## Installation
 

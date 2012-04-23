@@ -240,15 +240,15 @@ suite("After", function () {
                     function (next) {
                         assert.equal(++count, 1)
                         assert.equal(this.foo, "bar")
-                        next("foo")
+                        next(null, "foo")
                     },
-                    function (foo, next) {
+                    function (err, foo, next) {
                         assert.equal(++count, 2)
                         assert.equal(this.foo, "bar")
                         assert.equal(foo, "foo")
-                        next("bar")
+                        next(null, "bar")
                     },
-                    function (bar, next) {
+                    function (err, bar, next) {
                         assert.equal(++count, 3)
                         assert.equal(this.foo, "bar")
                         assert.equal(bar, "bar")
@@ -262,6 +262,20 @@ suite("After", function () {
                 ]
 
             after.flow(stack, { foo: "bar" })
+        })
+
+        test("it handles errors", function (done) {
+            after.flow([
+                function (next) {
+                    next(new Error("error"))
+                },
+                function () {
+                    
+                }
+            ], function (err) {
+                assert.equal(err.message, "error")
+                done()
+            })
         })
     })
 });
