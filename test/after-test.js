@@ -232,6 +232,38 @@ suite("After", function () {
             }); 
         })
     })
+
+    suite("flow", function () {
+        test("it flows", function (done) {
+            var count = 0,
+                stack = [
+                    function (next) {
+                        assert.equal(++count, 1)
+                        assert.equal(this.foo, "bar")
+                        next("foo")
+                    },
+                    function (foo, next) {
+                        assert.equal(++count, 2)
+                        assert.equal(this.foo, "bar")
+                        assert.equal(foo, "foo")
+                        next("bar")
+                    },
+                    function (bar, next) {
+                        assert.equal(++count, 3)
+                        assert.equal(this.foo, "bar")
+                        assert.equal(bar, "bar")
+                        next()
+                    },
+                    function (next) {
+                        assert.equal(++count, 4)
+                        assert.equal(next, null)
+                        done()
+                    }
+                ]
+
+            after.flow(stack, { foo: "bar" })
+        })
+    })
 });
 
 function call(f) {

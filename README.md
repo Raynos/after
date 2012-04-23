@@ -218,6 +218,23 @@ Some passes `false` to the finished callback if every callback in the iteration 
         ...
     }
 
+### <a href="#flow" name="flow">After.flow(array, context)</a>
+
+Creates a flow through all the functions in the array. Each function in the array is passed in the next function as the last argument. Optionally pass in a context which will be the this value for all functions
+
+after.flow([
+    function (next) {
+        next("foo")
+    },
+    function (foo, next) {
+        assert.equal(foo, "foo")
+        next()
+    },
+    function () {
+        assert.deepEqual(this, context)
+    }
+], context)
+
 ## Installation
 
 `npm install after`
