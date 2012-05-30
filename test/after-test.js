@@ -39,27 +39,10 @@ suite("After", function () {
             }
         });
 
-        test("after arguments", function (done) {
-            var next = after(2, function () {
-                assert(arguments[0][0] === data);
-                assert(arguments[1][0] === data);
-                assert(arguments[1][1] === data);
-                done();
-            }), data = {};
+        test("after terminates on error", function (done) {
+            var next = after(2, call(done))
 
-            next(data);
-            next(data, data);
-        });
-
-        test("unpack", function () {
-            var next = after(2, function () {
-                var data = after.unpack(arguments);
-                assert(data.foo === "foo");
-                assert(data.bar === "bar");
-            });
-
-            next("foo", "foo");
-            next("bar", "bar");
+            next({})
         })
     });
 
