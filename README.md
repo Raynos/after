@@ -64,8 +64,8 @@ These have been replaced with seperate modules
 
 ## MIT Licenced
 
-  [1]: https://secure.travis-ci.org/Raynos/after.js.png
-  [2]: http://travis-ci.org/Raynos/after.js
+  [1]: https://secure.travis-ci.org/Raynos/after.png
+  [2]: http://travis-ci.org/Raynos/after
   [3]: http://raynos.org/blog/2/Flow-control-in-node.js
   [4]: http://stackoverflow.com/questions/6852059/determining-the-end-of-asynchronous-operations-javascript/6852307#6852307
   [5]: http://stackoverflow.com/questions/6869872/in-javascript-what-are-best-practices-for-executing-multiple-asynchronous-functi/6870031#6870031
