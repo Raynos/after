@@ -12,12 +12,12 @@ test("after when called with 0 invokes", function (done) {
 });
 
 test("after 1", function (done) {
-    var next = after(1, call(done))
+    var next = after(1, done)
     next()
 })
 
 test("after 5", function (done) {
-    var next = after(5, call(done))
+    var next = after(5, done)
     , i = 5
 
     while (i--) {
@@ -26,7 +26,7 @@ test("after 5", function (done) {
 })
 
 test("manipulate count", function (done) {
-    var next = after(1, call(done))
+    var next = after(1, done)
     , i = 5
 
     next.count = i
@@ -41,8 +41,3 @@ test("after terminates on error", function (done) {
     next({})
 })
 
-function call(f) {
-    return function () {
-        f()
-    }
-}
