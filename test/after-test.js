@@ -96,6 +96,22 @@ test('gge', function(done) {
     next(new Error(1))
 })
 
+test('egg', function(done) {
+    function cb(err) {
+        assert.equal(err.message, 1);
+        done()
+    }
+
+    var next = after(3, cb, function(err) {
+        // should not happen
+        assert.ok(false);
+    });
+
+    next(new Error(1))
+    next()
+    next()
+})
+
 test('throws on too many calls', function(done) {
     var next = after(1, done);
     next()
