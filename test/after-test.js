@@ -36,8 +36,11 @@ test("manipulate count", function (done) {
 })
 
 test("after terminates on error", function (done) {
-    var next = after(2, call(done))
-
-    next({})
+    var next = after(2, function(err) {
+        assert.equal(err.message, 'test');
+        done();
+    })
+    next(new Error('test'))
+    next(new Error('test2'))
 })
 
