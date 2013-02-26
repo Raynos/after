@@ -35,9 +35,12 @@ test("manipulate count", function (done) {
     }
 })
 
-test("after terminates on error", function (done) {
-    var next = after(2, call(done))
+test("multiple fails should call callback once", function(done) {
+    var next = after(2, function() {
+        done();
+    })
 
-    next({})
+    next(new Error('one'));
+    next(new Error('two'));
 })
 
