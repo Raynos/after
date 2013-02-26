@@ -44,3 +44,61 @@ test("after terminates on error", function (done) {
     next(new Error('test2'))
 })
 
+test('gee', function(done) {
+    done = after(2, done)
+
+    function cb(err) {
+        assert.equal(err.message, 1);
+        done()
+    }
+
+    var next = after(3, cb, function(err) {
+        assert.equal(err.message, 2)
+        done()
+    });
+
+    next()
+    next(new Error(1))
+    next(new Error(2))
+})
+
+test('eee', function(done) {
+    done = after(3, done)
+
+    function cb(err) {
+        assert.equal(err.message, 1);
+        done()
+    }
+
+    var next = after(3, cb, function(err) {
+        assert.equal(err.message, 2)
+        done()
+    });
+
+    next(new Error(1))
+    next(new Error(2))
+    next(new Error(2))
+})
+
+test('gge', function(done) {
+    function cb(err) {
+        assert.equal(err.message, 1);
+        done()
+    }
+
+    var next = after(3, cb, function(err) {
+        // should not happen
+        assert.ok(false);
+    });
+
+    next()
+    next()
+    next(new Error(1))
+})
+
+test('throws on too many calls', function(done) {
+    var next = after(1, done);
+    next()
+    assert.throws(next, /after called too many times/);
+});
+
