@@ -36,7 +36,8 @@ test("manipulate count", function (done) {
 })
 
 test("multiple fails should call callback once", function(done) {
-    var next = after(2, function() {
+    var next = after(2, function(errs) {
+        assert.equal(errs.length, 2);
         done();
     })
 
