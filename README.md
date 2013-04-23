@@ -45,7 +45,7 @@ These have been replaced with seperate modules
 
 ## Tests
 
-`make test`
+`npm test`
 
 ## Blog post
 
