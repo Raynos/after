@@ -1,7 +1,7 @@
 {
   "name": "after",
   "description": "after - tiny flow control",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "author": "Raynos <raynos2@gmail.com>",
   "contributors": [
     {
