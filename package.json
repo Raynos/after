@@ -23,6 +23,5 @@
     "control",
     "arch"
   ],
-  "repository": "git://github.com/Raynos/after.git",
-  "main": "lib/after"
+  "repository": "git://github.com/Raynos/after.git"
 }
