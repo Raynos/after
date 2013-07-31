@@ -81,6 +81,9 @@ next()
 next(new Error("oops")) // logs oops
 next() // does nothing
 
+// This callback is only called once.
+// If there is an error the callback gets called immediately
+// this avoids the situation where errors get lost.
 function logError(err) {
     console.log(err)
 }
