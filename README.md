@@ -15,7 +15,7 @@ var updateUser = function (req, res) {
   // namely get request body and get session
   // then run updateUser with the results
   var next = after(2, updateUser)
-  var result = {}
+  var results = {}
   
   getJSONBody(req, res, function (err, body) {
     if (err) return next(err)
@@ -100,6 +100,7 @@ function logError(err) {
 ## Contributors
 
  - Raynos
+ - defunctzombie
 
 ## MIT Licenced
 
