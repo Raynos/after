@@ -23,5 +23,6 @@
     "control",
     "arch"
   ],
+  "license": "MIT",
   "repository": "git://github.com/Raynos/after.git"
 }
