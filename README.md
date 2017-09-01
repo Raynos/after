@@ -102,7 +102,7 @@ function logError(err) {
  - Raynos
  - defunctzombie
 
-## MIT Licenced
+## MIT Licensed
 
   [1]: https://secure.travis-ci.org/Raynos/after.png
   [2]: http://travis-ci.org/Raynos/after
