@@ -13,6 +13,9 @@
   "scripts": {
     "test": "mocha --ui tdd --reporter spec test/*.js"
   },
+  "files": [
+    "index.js"
+  ],
   "devDependencies": {
     "mocha": "~1.8.1"
   },
